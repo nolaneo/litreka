@@ -1,0 +1,58 @@
+.game-board-wrapper {
+  // perspective: 70em;
+}
+
+.game-board {
+  border: 1vmin solid #f0ead6;
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-auto-rows: minmax(calc(98vmin / 15), auto);
+  grid-auto-columns: minmax(calc(98vmin / 15), auto);
+  height: 100vmin;
+  width: 100vmin;
+  box-sizing: border-box;
+  background-color: #f0ead6;
+  // transform: rotateX(50deg) scale(0.8);
+  // margin: 0 auto;
+}
+
+.cell {
+  background-color: darkcyan;
+  border-radius: 0.6vmin;
+  border: 0.2vmin solid #f0ead6;
+}
+
+.cell:hover {
+  opacity: 0.5;
+}
+
+.cell.double-word-score {
+  background-color: orange;
+}
+
+.cell.triple-word-score {
+  background-color: orangered;
+}
+
+.cell.double-letter-score {
+  background-color: cornflowerblue;
+}
+
+.cell.triple-letter-score {
+  background-color: royalblue;
+}
+
+.cell.starting-point {
+  background-color: palevioletred;
+}
+
+.cell.with-letter {
+  color: rgba(0,0,0,0.9);
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5vmin;
+  background-color: #f0ead6;
+  box-shadow: inset -0.2vmin -0.5vmin 0px #c3beaf, inset 0.2vmin 0.1vmin 0px #c3beaf, 0 0.2vmin 3px rgba(0,0,0, 0.1);
+}
