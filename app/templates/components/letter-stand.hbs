@@ -1,0 +1,33 @@
+
+{{#sortable-group
+  class="layout__box o__has-columns"
+  direction="x"
+  onChange=(action 'updateList')
+as |group|
+}}
+  {{#each gameState.playerLetters as |letter index|}}
+    {{#sortable-item model=letter group=group handle=".letter-stand-dragger"}}
+      {{#draggable-object content=(hash letter=letter index=index)}}
+        <div class="letter-stand-cell">
+          {{letter}}
+          {{letter-points letter=letter}}
+        </div>
+      {{/draggable-object}}
+      <div class="letter-stand-dragger">
+        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="12" height="13" viewBox="0 0 12 13"><path d="M0 0h2v2H0zm5 0h2v2H5zm5 0h2v2h-2zM0 5h2v2H0zm5 0h2v2H5zm5 0h2v2h-2zM0 10h2v2H0zm5 0h2v2H5zm5 0h2v2h-2z"/></svg>
+      </div>
+    {{/sortable-item}}
+  {{/each}}
+{{/sortable-group}}
+
+<div style="position: fixed; bottom: 0; right: 0; width: 300px; font-size: 11px; font-family: sans-serif">
+  <ul>
+    <li>SCORE {{gameState.playerMoves.lastObject.score}}</li>
+    <li>IS VALID {{gameState.playerMoves.lastObject.isValidMove}}</li>
+    <li>IS HORIZONTAL {{gameState.playerMoves.lastObject.isHorizontal}}</li>
+    <li>IS VERTICAL {{gameState.playerMoves.lastObject.isVertical}}</li>
+    <li>IS HORIZONTALLY VALID {{gameState.playerMoves.lastObject.isHorizontallyValid}}</li>
+    <li>IS VERTICALLY VALID {{gameState.playerMoves.lastObject.isVerticallyValid}}</li>
+  </ul>
+</div>
+

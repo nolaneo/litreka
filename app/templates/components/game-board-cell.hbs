@@ -1,1 +1,8 @@
-{{yield}}
+{{#if cell.isEmpty}}
+  {{#draggable-object-target action=(action "placeLetter")}}
+    {{cell.x}}, {{cell.y}}
+  {{/draggable-object-target}}
+{{else}}
+  {{cell.letter}}
+  {{letter-points letter=cell.letter}}
+{{/if}}

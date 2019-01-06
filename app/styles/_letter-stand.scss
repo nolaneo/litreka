@@ -1,0 +1,53 @@
+.letter-stand {
+  // width: calc(100vw - 100vmin);
+  width: calc(((98vmin / 15) + 10px) * 7 + 2vmin);
+  background: #003300;
+  height: 15vmin;
+  padding: 1vmin 0vmin;
+  border: 1vmin solid #004d00;
+  border-bottom: none;
+  box-sizing: border-box;
+  cursor: move;
+}
+
+.letter-stand-cell {
+  position: relative;
+  margin: 0 5px;
+  border-radius: 0.6vmin;
+  width: calc(98vmin / 15);
+  height: calc(98vmin / 15);
+  font-size: 3.5vmin;
+  color: rgba(0,0,0,0.9);
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0ead6;
+  box-shadow: inset -0.2vmin -0.5vmin 0px #c3beaf, inset 0.2vmin 0.1vmin 0px #c3beaf, 0 0.2vmin 3px rgba(0,0,0, 0.1);
+}
+
+.letter-stand-dragger {
+  margin: 5px 5px 0;
+  width: calc(98vmin / 15);
+  border-radius: 0.6vmin;
+  background-color: #006600;
+  padding: 1vmin;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    fill: white;
+  }
+}
+
+
+.sortable-item.is-dragging .letter-stand-dragger {
+  cursor: grabbing;
+}
+
+.sortable-item {
+  transition: all .125s;
+}
