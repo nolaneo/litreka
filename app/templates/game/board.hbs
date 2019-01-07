@@ -2,6 +2,12 @@
   {{game-board}}
   <div class="layout__box o__flexes-to-1 o__has-rows">
     {{webcam}}
+    <button onclick={{action "completeMove"}}>
+      Complete
+    </button>
+    <div class="layout__box o__has-columns">
+      {{scores-list moves=gameState.playerMoves}}
+    </div>
     {{letter-stand}}
   </div>
 </div>

@@ -28,6 +28,16 @@ as |group|
     <li>IS VERTICAL {{gameState.playerMoves.lastObject.isVertical}}</li>
     <li>IS HORIZONTALLY VALID {{gameState.playerMoves.lastObject.isHorizontallyValid}}</li>
     <li>IS VERTICALLY VALID {{gameState.playerMoves.lastObject.isVerticallyValid}}</li>
+    <li>VALID PLACEMENT {{gameState.playerMoves.lastObject.hasValidPlacement}}</li>
+    <li>SCORABLE WORD {{#each gameState.playerMoves.lastObject.scorableWord as |c|}}{{c.letter}}{{/each}}</li>
+    <li>
+      ADDITIONAL WORDS
+      <ul>
+        {{#each gameState.playerMoves.lastObject.additionalScorableWords as |w|}}
+          <li>{{#each w as |c|}}{{c.letter}}{{/each}}</li>
+        {{/each}}
+      </ul>
+    </li>
   </ul>
 </div>
 
