@@ -8,25 +8,28 @@ import { TYPES } from '../data/board-layout';
 export default Object.extend({
   gameState: service(),
 
-  init() {
-    this._super(...arguments);
-    this.set('cells', []);
-    this.set('completed', false);
-  },
+  cells: A(),
+  completedAt: null,
 
-  cells: null,
-  completed: false,
+  serialize() {
+    return {
+      cells: this.get('cells').map(c => c.serialize()),
+      completedAt: this.get('completedAt'),
+    };
+  },
 
   isHorizontal: computed('cells.[]', function() {
     let cells = this.get('cells');
+    let firstCell = this.get('cells.firstObject');
     let yLocations = cells.mapBy('y');
-    return yLocations.uniq().length === 1;
+    return yLocations.uniq().length === 1 && firstCell.furthestLetterLeft() !== firstCell.furthestLetterRight();
   }),
 
   isVertical: computed('cells.[]', function() {
     let cells = this.get('cells');
+    let firstCell = this.get('cells.firstObject');
     let xLocations = cells.mapBy('x');
-    return xLocations.uniq().length === 1;
+    return xLocations.uniq().length === 1 && firstCell.furthestLetterUp() !== firstCell.furthestLetterDown();
   }),
 
   isValidMove: computed('hasValidPlacement', 'isHorizontallyValid', 'isVerticallyValid', function() {
@@ -118,11 +121,11 @@ export default Object.extend({
       } else if (cell.get('isTripleWord') && playerPlacedCell) {
         return { letter: cell.get('letter'), points: letterPoints, special: TYPES.tripleWord }
       } else {
-        return { letter: cell.get('letter'), points: letterPoints * 3, special: 'none' }
+        return { letter: cell.get('letter'), points: letterPoints , special: 0 }
       }
     });
     let score = { doubleWords: [], tripleWords: [], bonus: false, letters };
-    let points = letters.reduce((total, element) => total += element.points);
+    let points = letters.reduce((total, element) => total += element.points, 0);
 
     cells.filterBy('isDoubleWord').forEach(() => points *= 2);
     cells.filterBy('isTripleWord').forEach(() => points *= 3);
@@ -131,6 +134,7 @@ export default Object.extend({
       points += 50;
       score.bonus = true;
     }
+    score.points = points;
     return score;
   },
 

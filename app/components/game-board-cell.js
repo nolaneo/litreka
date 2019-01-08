@@ -16,7 +16,7 @@ export default Component.extend({
   gameState: service(),
 
   click() {
-    if (this.get('cell.unpersisted')) {
+    if (this.get('cell.unpersisted') && this.get('cell.notEmpty')) {
       this.get('gameState.playerLetters').pushObject(this.get('cell.letter'));
       this.get('gameState.playerMoves.lastObject.cells').removeObject(this.get('cell'));
       this.setProperties({

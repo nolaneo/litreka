@@ -1,0 +1,34 @@
+.score-cell {
+  font-size: 1.5vmin;
+  width: calc(98vmin / 30);
+  height: calc(98vmin / 30);
+}
+
+.score-points {
+  margin: 0;
+  font-size: 3.5vmin;
+  font-family: sans-serif;
+  font-weight: 200;
+  min-width: 5vmin;
+  margin-left: 10px;
+  color: white;
+  border-right: 1px solid grey;
+}
+
+.score-points.uncompleted {
+  opacity: 0.1;
+}
+
+.score-small-header {
+  font-size: 1vmin;
+  font-weight: 100;
+  font-family: sans-serif;
+  color: white;
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+
+.score-big-header {
+  font-weight: bold;
+  border: none;
+}

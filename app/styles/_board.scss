@@ -27,24 +27,59 @@
   opacity: 0.5;
 }
 
+.cell::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1vmin;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  font-family: sans-serif;
+  text-align: center;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+}
+
 .cell.double-word-score {
   background-color: orange;
+}
+
+.cell.double-word-score::after {
+  content: 'Double Word';
 }
 
 .cell.triple-word-score {
   background-color: orangered;
 }
 
+.cell.triple-word-score::after {
+  content: 'Triple Word';
+}
+
 .cell.double-letter-score {
   background-color: cornflowerblue;
+}
+
+.cell.double-letter-score::after {
+  content: 'Double Letter';
 }
 
 .cell.triple-letter-score {
   background-color: royalblue;
 }
 
+.cell.triple-letter-score::after {
+  content: 'Triple Letter';
+}
+
 .cell.starting-point {
   background-color: palevioletred;
+}
+
+.cell.starting-point::after {
+  content: '•';
+  font-size: 4vmin;
 }
 
 .cell.with-letter {
@@ -56,6 +91,10 @@
   font-size: 3.5vmin;
   background-color: #f0ead6;
   box-shadow: inset -0.2vmin -0.5vmin 0px #c3beaf, inset 0.2vmin 0.1vmin 0px #c3beaf, 0 0.2vmin 3px rgba(0,0,0, 0.1);
+}
+
+.cell.with-letter::after {
+  display: none;
 }
 
 .cell.with-letter.unpersisted {

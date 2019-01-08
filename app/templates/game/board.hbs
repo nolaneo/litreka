@@ -2,12 +2,17 @@
   {{game-board}}
   <div class="layout__box o__flexes-to-1 o__has-rows">
     {{webcam}}
+    <div class="layout__box o__flexes-to-1 o__has-rows  o__scrolls">
+      <div class="layout__box o__has-columns o__flexes-to-1">
+        {{scores-list moves=gameState.playerMoves player="You"}}
+        {{scores-list moves=gameState.opponentMoves player="Them"}}
+      </div>
+    </div>
     <button onclick={{action "completeMove"}}>
       Complete
     </button>
-    <div class="layout__box o__has-columns">
-      {{scores-list moves=gameState.playerMoves}}
+    <div class="layout__box o__centers-horizontally">
+      {{letter-stand}}
     </div>
-    {{letter-stand}}
   </div>
 </div>

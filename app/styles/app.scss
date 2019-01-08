@@ -1,10 +1,13 @@
 @import "board.scss";
 @import "letter-stand.scss";
+@import "scores.scss";
+
 
 html, body, body > .ember-view {
   margin: 0;
   padding: 0;
   height: 100%;
+  background: #194d33;
 }
 
 body > .ember-view {

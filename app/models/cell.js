@@ -22,6 +22,10 @@ export default Object.extend({
   isEmpty: none('letter'),
   notEmpty: not('isEmpty'),
 
+  serialize() {
+    return this.getProperties(['x', 'y', 'letter', 'unpersisted', 'type']);
+  },
+
   hasPersistedLetter: computed('unpersisted', 'notEmpty', function() {
     return this.get('notEmpty') && !this.get('unpersisted');
   }),
