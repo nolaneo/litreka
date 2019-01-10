@@ -16,7 +16,7 @@ export default Component.extend({
   gameState: service(),
 
   click() {
-    if (this.get('cell.unpersisted') && this.get('cell.notEmpty')) {
+    if (this.get('gameState.isPlayerMove') && this.get('cell.unpersisted') && this.get('cell.notEmpty')) {
       this.get('gameState.playerLetters').pushObject(this.get('cell.letter'));
       this.get('gameState.playerMoves.lastObject.cells').removeObject(this.get('cell'));
       this.setProperties({
@@ -28,12 +28,15 @@ export default Component.extend({
 
   actions: {
     placeLetter(data) {
-      this.setProperties({
-        'cell.letter': data.letter,
-        'cell.unpersisted': true
-      });
-      this.get('gameState.playerLetters').removeAt(data.index);
-      this.get('gameState.playerMoves.lastObject.cells').pushObject(this.get('cell'));
+      if (this.get('gameState.isPlayerMove')) {
+        this.setProperties({
+          'cell.letter': data.letter,
+          'cell.unpersisted': true
+        });
+        this.get('gameState.playerLetters').removeAt(data.index);
+        this.get('gameState.playerMoves.lastObject.cells').pushObject(this.get('cell'));
+        this.get('gameState').syncState();
+      }
     }
   }
 });

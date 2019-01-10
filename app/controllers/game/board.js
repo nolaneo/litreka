@@ -6,7 +6,9 @@ export default Controller.extend({
 
   actions: {
     completeMove() {
-      this.get('gameState').completeMove();
+      if (this.get('gameState.isPlayerMove')) {
+        this.get('gameState').completeMove();
+      }
     }
   }
 });

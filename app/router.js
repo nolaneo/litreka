@@ -9,6 +9,8 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('game', function() {
     this.route('board');
+    this.route('waiting');
+    this.route('connect', { path: ':id' });
   });
 });
 

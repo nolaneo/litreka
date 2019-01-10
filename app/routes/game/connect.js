@@ -4,15 +4,10 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   connectionService: service(),
   gameState: service(),
-
-  beforeModel(transition) {
-    this.get('connectionService').initialize();
-    this.get('gameState').initReceiver();
+  model(data) {
     this.get('connectionService').on('connected', () => {
-      this.get('gameState').initialize();
+      this.transitionTo('game.board');
     })
-    if (transition.intent.url == "/") {
-      this.transitionTo('game.waiting');
-    }
+    this.get('connectionService').connect(data.id);
   }
 });

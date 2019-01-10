@@ -4,11 +4,18 @@ import { computed }  from '@ember/object';
 import { inject as service } from '@ember/service';
 import { A } from '@ember/array';
 import { TYPES } from '../data/board-layout';
+import { isNone }  from '@ember/utils';
 
 export default Object.extend({
   gameState: service(),
 
-  cells: A(),
+  init() {
+    if (isNone(this.get('cells'))) {
+      this.set('cells', A());
+    }
+  },
+
+  cells: null,
   completedAt: null,
 
   serialize() {

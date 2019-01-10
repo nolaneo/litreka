@@ -1,6 +1,7 @@
 @import "board.scss";
 @import "letter-stand.scss";
 @import "scores.scss";
+@import "waiting.scss";
 
 
 html, body, body > .ember-view {
@@ -64,4 +65,57 @@ body > .ember-view {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.t__centered {
+  text-align: center;
+}
+
+.white {
+  color: white;
+}
+
+@for $i from 0 through 12 {
+  $padding: 5 * $i;
+
+  .u__pad__#{$padding} {
+    padding: 1px * $padding !important;
+  }
+  .u__padt__#{$padding} {
+    padding-top: 1px * $padding !important;
+  }
+  .u__padr__#{$padding} {
+    padding-right: 1px * $padding !important;
+  }
+  .u__padb__#{$padding} {
+    padding-bottom: 1px * $padding !important;
+  }
+  .u__padl__#{$padding} {
+    padding-left: 1px * $padding !important;
+  }
+}
+
+@for $i from 0 through 12 {
+  $margin: 5 * $i;
+
+  .u__m__#{$margin} {
+    margin: 1px * $margin !important;
+  }
+  .u__mt__#{$margin} {
+    margin-top: 1px * $margin !important;
+  }
+  .u__mr__#{$margin} {
+    margin-right: 1px * $margin !important;
+  }
+  .u__mb__#{$margin} {
+    margin-bottom: 1px * $margin !important;
+  }
+  .u__ml__#{$margin} {
+    margin-left: 1px * $margin !important;
+  }
+}
+
+video {
+  max-height: 300px;
+  border: 1px solid white;
 }

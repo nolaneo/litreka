@@ -4,6 +4,8 @@ import Letters from '../data/letters';
 import Cell from '../models/cell';
 import Move from '../models/move';
 import { getOwner }  from '@ember/application';
+import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
 
 const LS_KEY = 'ongoingGame';
 
@@ -16,19 +18,46 @@ function shuffle(a) {
 }
 
 export default Service.extend({
+  connectionService: service(),
+
+  initReceiver() {
+    this.get('connectionService').on('received', (data) => this.setStateFromJSON(data));
+  },
+
   initialize() {
-    if (localStorage.getItem(LS_KEY)) {
-      if(confirm('Resume ongoing game?')) {
-        let game = JSON.parse(localStorage.getItem(LS_KEY));
-        this.set('letterBag', game.letterBag);
-        this.set('playerLetters', game.playerLetters);
-        this.set('cells', game.cells.map(cellData => this.deserializeCell(cellData)));
-        this.set('playerMoves', game.playerMoves.map(m => this.deserializeMove(m)));
-        this.set('opponentMoves', game.opponentMoves.map(m => this.deserializeMove(m)));
-        return
+    if (this.get('connectionService.isMaster')) {
+      if (localStorage.getItem(LS_KEY)) {
+        if (confirm('Resume ongoing game?')) {
+          let game = JSON.parse(localStorage.getItem(LS_KEY));
+          this.setStateFromJSON(game);
+        } else {
+          this.newGame();
+        }
+      } else {
+        this.newGame();
       }
+      this.syncState();
+    } else {
+      console.log('NOT MASTER');
     }
-    this.newGame();
+  },
+
+  syncState() {
+    later(this, () => {
+      console.log('syncState');
+      this.get('connectionService.connection').send(this.dataSyncPacket());
+    }, 500);
+  },
+
+  setStateFromJSON(game) {
+    console.log('State received!');
+    if (game.letterBag) this.set('letterBag', game.letterBag);
+    if (game.playerLetters) this.set('playerLetters', game.playerLetters);
+    if (game.opponentLetters) this.set('opponentLetters', game.opponentLetters);
+    if (game.cells) this.set('cells', game.cells.map(cellData => this.deserializeCell(cellData)));
+    if (game.playerMoves) this.set('playerMoves', game.playerMoves.map(m => this.deserializeMove(m)));
+    if (game.opponentMoves) this.set('opponentMoves', game.opponentMoves.map(m => this.deserializeMove(m)));
+    if (game.isPlayerMove) this.set('isPlayerMove', game.isPlayerMove);
   },
 
   deserializeCell(cellData) {
@@ -49,17 +78,21 @@ export default Service.extend({
     this.set('letterBag', letterBag);
     this.set('cells', BoardLayout.map(cellData => Cell.create(cellData, { container: getOwner(this) })));
     this.set('playerLetters', this.takeLetters(7));
-    this.set('playerMoves', [new Move({ container: getOwner(this) })]);
-    this.set('opponentMoves', []);
+    this.set('opponentLetters', this.takeLetters(7));
+    this.set('playerMoves', [Move.create({ container: getOwner(this) })]);
+    this.set('opponentMoves', [Move.create({ container: getOwner(this) })]);
+    this.set('isPlayerMove', Math.random() > 0.5)
   },
 
   localStorageSync() {
     return JSON.stringify({
       letterBag: this.get('letterBag'),
       playerLetters: this.get('playerLetters'),
+      opponentLetters: this.get('opponentLetters'),
       cells: this.get('cells').map(c => c.serialize()),
       opponentMoves: this.get('opponentMoves').map(m => m.serialize()),
       playerMoves: this.get('playerMoves').map(m => m.serialize()),
+      isPlayerMove: this.get('isPlayerMove'),
     });
   },
 
@@ -69,6 +102,9 @@ export default Service.extend({
       cells: this.get('cells').map(c => c.serialize()),
       opponentMoves: this.get('playerMoves').map(m => m.serialize()),
       playerMoves: this.get('opponentMoves').map(m => m.serialize()),
+      playerLetters: this.get('opponentLetters'),
+      opponentLetters: this.get('playerLetters'),
+      isPlayerMove: !this.get('isPlayerMove'),
     };
   },
 
@@ -77,8 +113,10 @@ export default Service.extend({
     activeMove.set('completedAt', new Date().getTime());
     activeMove.get('cells').setEach('unpersisted', false);
     this.get('playerLetters').pushObjects(this.takeLetters(activeMove.get('cells.length')));
-    this.get('opponentMoves').pushObject(new Move({ container: getOwner(this) }));
+    this.get('playerMoves').pushObject(new Move({ container: getOwner(this) }));
     localStorage.setItem(LS_KEY, this.localStorageSync());
+    this.set('isPlayerMove', false);
+    this.syncState();
   },
 
   letterPoints(letter) {
