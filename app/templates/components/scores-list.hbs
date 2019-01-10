@@ -6,8 +6,9 @@
     <div class="layout__box o__has-columns o__centers-vertically">
       <h1 class="score-points {{unless move.completedAt 'uncompleted'}}">{{score.points}}</h1>
       {{#each score.letters as |letterInfo|}}
-        <div class="letter-stand-cell score-cell">
+        <div class="letter-stand-cell score-cell o__{{letterInfo.special}}">
           {{letterInfo.letter}}
+          {{letter-points letter=letterInfo.letter}}
         </div>
       {{/each}}
     </div>

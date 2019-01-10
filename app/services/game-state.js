@@ -46,7 +46,8 @@ export default Service.extend({
     later(this, () => {
       console.log('syncState');
       this.get('connectionService.connection').send(this.dataSyncPacket());
-    }, 500);
+      localStorage.setItem(LS_KEY, this.localStorageSync());
+    }, 1000);
   },
 
   setStateFromJSON(game) {
@@ -58,6 +59,7 @@ export default Service.extend({
     if (game.playerMoves) this.set('playerMoves', game.playerMoves.map(m => this.deserializeMove(m)));
     if (game.opponentMoves) this.set('opponentMoves', game.opponentMoves.map(m => this.deserializeMove(m)));
     if (game.isPlayerMove) this.set('isPlayerMove', game.isPlayerMove);
+    localStorage.setItem(LS_KEY, this.localStorageSync());
   },
 
   deserializeCell(cellData) {
@@ -114,7 +116,6 @@ export default Service.extend({
     activeMove.get('cells').setEach('unpersisted', false);
     this.get('playerLetters').pushObjects(this.takeLetters(activeMove.get('cells.length')));
     this.get('playerMoves').pushObject(new Move({ container: getOwner(this) }));
-    localStorage.setItem(LS_KEY, this.localStorageSync());
     this.set('isPlayerMove', false);
     this.syncState();
   },

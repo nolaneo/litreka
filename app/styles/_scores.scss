@@ -1,7 +1,22 @@
 .score-cell {
+  position: relative;
   font-size: 1.5vmin;
   width: calc(98vmin / 30);
   height: calc(98vmin / 30);
+
+  .letter-score {
+    bottom: 0vmin;
+    right: 0.3vmin;
+    font-size: 0.8vmin;
+  }
+}
+
+.score-cell.o__3 {
+  border: 1px solid cornflowerblue;
+}
+
+.score-cell.o__4 {
+  border: 1px solid royalblue;
 }
 
 .score-points {
