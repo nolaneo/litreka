@@ -47,7 +47,7 @@ export default Service.extend({
       console.log('syncState');
       this.get('connectionService.connection').send(this.dataSyncPacket());
       localStorage.setItem(LS_KEY, this.localStorageSync());
-    }, 1000);
+    }, 2000);
   },
 
   setStateFromJSON(game) {
