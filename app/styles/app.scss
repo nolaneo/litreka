@@ -115,7 +115,27 @@ body > .ember-view {
   }
 }
 
+
+.snowflake:nth-of-type(0) .letter-stand-cell { transform: rotate(5deg) }
+.snowflake:nth-of-type(1) .letter-stand-cell { transform: rotate(15deg) }
+.snowflake:nth-of-type(2) .letter-stand-cell { transform: rotate(25deg) }
+.snowflake:nth-of-type(3) .letter-stand-cell { transform: rotate(290deg) }
+.snowflake:nth-of-type(4) .letter-stand-cell { transform: rotate(300deg) }
+.snowflake:nth-of-type(5) .letter-stand-cell { transform: rotate(40deg) }
+.snowflake:nth-of-type(6) .letter-stand-cell { transform: rotate(30deg) }
+.snowflake:nth-of-type(7) .letter-stand-cell { transform: rotate(320deg) }
+.snowflake:nth-of-type(8) .letter-stand-cell { transform: rotate(20deg) }
+.snowflake:nth-of-type(9) .letter-stand-cell { transform: rotate(310deg) }
+.snowflake:nth-of-type(10) .letter-stand-cell { transform: rotate(50deg) }
+.snowflake:nth-of-type(11) .letter-stand-cell { transform: rotate(300deg) }
+
+
+
 video {
   max-height: 300px;
   border: 1px solid white;
+}
+
+.z__10 {
+  z-index: 10;
 }

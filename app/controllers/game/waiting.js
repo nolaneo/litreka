@@ -13,6 +13,9 @@ export default Controller.extend({
       return `${protocol}//${host}${ENV.rootURL}${path}`;
     }
   }),
+
+  letters: ['L', 'I', 'T', 'E', 'R', 'K', 'A', 'B', 'Y', 'N', 'O', 'L', 'A', 'N', 'E', 'O'],
+
   actions: {
     copied() {
       this.set('copied', true);
