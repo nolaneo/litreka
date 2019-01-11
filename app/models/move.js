@@ -13,15 +13,19 @@ export default Object.extend({
     if (isNone(this.get('cells'))) {
       this.set('cells', A());
     }
+    if (isNone(this.get('scores'))) {
+      this.set('scores', A());
+    }
   },
 
-  cells: null,
   completedAt: null,
 
   serialize() {
     return {
       cells: this.get('cells').map(c => c.serialize()),
       completedAt: this.get('completedAt'),
+      playerId: this.get('playerId'),
+      scores: this.get('scores')
     };
   },
 
@@ -115,7 +119,7 @@ export default Object.extend({
     return scorableWords;
   }),
 
-  generateScore(cells, options) {
+  generateScore(cells, options = {}) {
     let letters = cells.map(cell => {
       let letterPoints = Letters[cell.get('letter').toLowerCase()].points;
       let playerPlacedCell = this.get('cells').includes(cell);
@@ -131,13 +135,22 @@ export default Object.extend({
         return { letter: cell.get('letter'), points: letterPoints , special: 0 }
       }
     });
-    let score = { doubleWords: [], tripleWords: [], bonus: false, letters };
+    let doubleWordCells = cells.filterBy('isDoubleWord');
+    let tripleWordCells = cells.filterBy('isTripleWord')
+
+    let score = {
+      doubleWords: new Array(doubleWordCells.length),
+      tripleWords: new Array(tripleWordCells.length),
+      bonus: false,
+      letters
+    };
+
     let points = letters.reduce((total, element) => total += element.points, 0);
 
-    cells.filterBy('isDoubleWord').forEach(() => points *= 2);
-    cells.filterBy('isTripleWord').forEach(() => points *= 3);
+    doubleWordCells.forEach(() => points *= 2);
+    tripleWordCells.forEach(() => points *= 3);
 
-    if (this.get('cells.length') === 7 && options.canPlace) {
+    if (this.get('cells.length') === 7 && options.canBonus) {
       points += 50;
       score.bonus = true;
     }
@@ -145,12 +158,12 @@ export default Object.extend({
     return score;
   },
 
-  scores: computed('mainScorableWord', 'additionalScorableWords.[]', function() {
+  generateAllScores() {
     let scores = A();
     if (this.get('mainScorableWord')) {
-      scores.pushObject(this.generateScore(this.get('mainScorableWord')));
+      scores.pushObject(this.generateScore(this.get('mainScorableWord'), { canBonus: true }));
     }
     this.get('additionalScorableWords').forEach(sw => scores.pushObject(this.generateScore(sw)));
-    return scores;
-  }),
+    this.set('scores', scores || []);
+  },
 });

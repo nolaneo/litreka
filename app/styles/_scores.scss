@@ -12,11 +12,29 @@
 }
 
 .score-cell.o__3 {
-  border: 1px solid cornflowerblue;
+  border: 3px solid cornflowerblue;
 }
 
 .score-cell.o__4 {
-  border: 1px solid royalblue;
+  border: 3px solid royalblue;
+}
+
+.score-cell.o__double-word {
+  background: orange;
+  font-size: 1.2vmin;
+  color: white;
+}
+
+.score-cell.o__triple-word {
+  background: orangered;
+  font-size: 1.2vmin;
+  color: white;
+}
+
+.score-cell.o__bonus {
+  background: fuchsia;
+  font-size: 1vmin;
+  color: white;
 }
 
 .score-points {

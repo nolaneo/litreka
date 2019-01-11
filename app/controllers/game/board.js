@@ -9,6 +9,9 @@ export default Controller.extend({
       if (this.get('gameState.isPlayerMove')) {
         this.get('gameState').completeMove();
       }
+    },
+    manualSync() {
+      this.get('gameState').syncState();
     }
   }
 });

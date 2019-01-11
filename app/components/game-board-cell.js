@@ -18,7 +18,8 @@ export default Component.extend({
   click() {
     if (this.get('gameState.isPlayerMove') && this.get('cell.unpersisted') && this.get('cell.notEmpty')) {
       this.get('gameState.playerLetters').pushObject(this.get('cell.letter'));
-      this.get('gameState.playerMoves.lastObject.cells').removeObject(this.get('cell'));
+      this.get('gameState.moves.lastObject.cells').removeObject(this.get('cell'));
+      this.get('gameState.moves.lastObject').generateAllScores();
       this.setProperties({
         'cell.letter': null,
         'cell.unpersisted': false
@@ -34,7 +35,8 @@ export default Component.extend({
           'cell.unpersisted': true
         });
         this.get('gameState.playerLetters').removeAt(data.index);
-        this.get('gameState.playerMoves.lastObject.cells').pushObject(this.get('cell'));
+        this.get('gameState.moves.lastObject.cells').pushObject(this.get('cell'));
+        this.get('gameState.moves.lastObject').generateAllScores();
         this.get('gameState').syncState();
       }
     }

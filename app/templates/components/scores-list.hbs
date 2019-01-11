@@ -11,6 +11,21 @@
           {{letter-points letter=letterInfo.letter}}
         </div>
       {{/each}}
+      {{#each score.doubleWords}}
+        <div class="letter-stand-cell score-cell o__double-word">
+          x2
+        </div>
+      {{/each}}
+      {{#each score.tripleWords}}
+        <div class="letter-stand-cell score-cell o__triple-word">
+          x3
+        </div>
+      {{/each}}
+      {{#if score.bonus}}
+        <div class="letter-stand-cell score-cell o__bonus">
+          +50
+        </div>
+      {{/if}}
     </div>
   {{/each}}
 {{/each}}
