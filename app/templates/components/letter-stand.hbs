@@ -9,7 +9,9 @@ as |group|
     {{#sortable-item model=letter group=group handle=".letter-stand-dragger"}}
       {{#draggable-object content=(hash letter=letter index=index)}}
         <div class="letter-stand-cell">
-          {{letter}}
+          {{#if (not-eq letter "?")}}
+            {{letter}}
+          {{/if}}
           {{letter-points letter=letter}}
         </div>
       {{/draggable-object}}

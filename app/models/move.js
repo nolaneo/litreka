@@ -135,8 +135,8 @@ export default Object.extend({
         return { letter: cell.get('letter'), points: letterPoints , special: 0 }
       }
     });
-    let doubleWordCells = cells.filterBy('isDoubleWord');
-    let tripleWordCells = cells.filterBy('isTripleWord')
+    let doubleWordCells = cells.filter(cell => cell.get('isDoubleWord') && cell.get('unpersisted'));
+    let tripleWordCells = cells.filter(cell => cell.get('isTripleWord') && cell.get('unpersisted'));
 
     let score = {
       doubleWords: new Array(doubleWordCells.length),
