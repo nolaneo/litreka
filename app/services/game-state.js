@@ -51,11 +51,11 @@ export default Service.extend({
     }
   },
 
-  playerMoves: computed('moves.@each.uniqId', function() {
+  playerMoves: computed('moves.@each.playerId', function() {
     return this.get('moves').filter(m => m.get('playerId') === this.get('playerId'));
   }),
 
-  opponentMoves: computed('moves.@each.uniqId', function() {
+  opponentMoves: computed('moves.@each.playerId', function() {
     return this.get('moves').filter(m => m.get('playerId') === this.get('opponentId'));
   }),
 
@@ -70,7 +70,7 @@ export default Service.extend({
   setStateFromLocalStorage(game) {
     this.setStateFromJSON(game);
     this.get('moves').forEach(move => {
-      if (move.get('playerId') === move.playerId) {
+      if (game.playerId === move.playerId) {
         move.set('playerId', this.get('playerId'));
       } else {
         move.set('playerId', this.get('opponentId'));

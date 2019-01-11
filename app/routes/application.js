@@ -6,6 +6,7 @@ export default Route.extend({
   gameState: service(),
 
   beforeModel(transition) {
+    window.LitrekaRoute = this;
     this.get('connectionService').initialize();
     this.get('gameState').initReceiver();
     this.get('connectionService').on('connected', () => {

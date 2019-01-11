@@ -4,10 +4,13 @@ import Peer from 'peerjs';
 
 import { none } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 const PEER_SERVER_KEY = 'lwjd5qra8257b9';
 
 export default Service.extend(Evented, {
+  gameState: service(),
+
   hasInitialized: false,
   initialize(id = null) {
     if (this.get('peer')) {
@@ -17,6 +20,7 @@ export default Service.extend(Evented, {
     console.log('Initializing connection service');
     peer.on('open', id => {
       this.set('peerId', id);
+      this.set('gameState.playerId', id);
       console.log('Peer id: ', id);
     });
     peer.on('connection', connection => this._setupConnection(connection, true));
